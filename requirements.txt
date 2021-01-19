@@ -1,0 +1,7 @@
+aiogram
+aiohttp[speedups]
+cchardet
+click
+emoji
+Jinja2
+prometheus_async[aiohttp]
