@@ -1,0 +1,5 @@
+aiogram
+aiohttp[speedups]
+cchardet
+click
+prometheus_async[aiohttp]
