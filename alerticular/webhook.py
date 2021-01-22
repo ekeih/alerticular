@@ -12,11 +12,31 @@ async def handle(request):
     return web.Response(text="Hello World!")
 
 
-@routes.get("/out/telegram/{chat}/spam")
+@routes.get("/telegram/{chat}/spam")
 async def spam(request):
     chat = request.match_info.get("chat")
     await request.app["telegram_bot"].bot.send_message(chat, "Spam, Spam, Spam!")
-    return web.Response(text="Success: {} got spammed".format(chat))
+    return web.Response(text="Success: {} got spammed.".format(chat))
+
+
+@routes.post("/alertmanager")
+async def alertmanager_debug(request):
+    message = await request.json()
+    logging.info(message)
+    return web.Response(text="Success: Alert logged.")
+
+
+@routes.post("/alertmanager/{chat}")
+async def alertmanager_notify(request):
+    chat = request.match_info.get("chat")
+    message = await request.json()
+    logging.info(message)
+    status = message.get("status")
+    alert_list = ""
+    for alert in message.get("alerts"):
+        alert_list += "\n - {}".format(alert.get("labels").get("alertname"))
+    await request.app["telegram_bot"].bot.send_message(chat, "{}:{}".format(status, alert_list))
+    return web.Response(text="Success: Alerted {}.".format(chat))
 
 
 async def start_background_tasks(app):

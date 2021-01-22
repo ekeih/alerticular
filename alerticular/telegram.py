@@ -10,10 +10,12 @@ class Telegram:
         self.dispatcher.register_message_handler(self.echo)
 
     async def send_welcome(self, message: types.Message):
+        logging.info("{}: {}".format(message.chat, message.text))
         await message.reply("This bot is alerticular good!")
 
     async def echo(self, message: types.Message):
-        await message.answer(message.text)
+        logging.info("{}: {}".format(message.chat, message.text))
+        await message.answer("Echo: {}".format(message.text))
 
     async def run(self):
         logging.info("Starting Telegram bot")
