@@ -1,9 +1,11 @@
 import asyncio
 from aiohttp import web
 import logging
-from alerticular.telegram import Telegram
+from pprint import pformat
+import alerticular.telegram as telegram
 from alerticular.metrics import run_metrics_endpoint
 
+logger = logging.getLogger(__name__)
 routes = web.RouteTableDef()
 
 
@@ -15,14 +17,14 @@ async def handle(request):
 @routes.get("/telegram/{chat}/spam")
 async def spam(request):
     chat = request.match_info.get("chat")
-    await request.app["telegram_bot"].bot.send_message(chat, "Spam, Spam, Spam!")
+    await telegram.bot.send_message(chat, "Spam, Spam, Spam!")
     return web.Response(text="Success: {} got spammed.".format(chat))
 
 
 @routes.post("/alertmanager")
 async def alertmanager_debug(request):
     message = await request.json()
-    logging.info(message)
+    logger.info(pformat(message))
     return web.Response(text="Success: Alert logged.")
 
 
@@ -30,23 +32,19 @@ async def alertmanager_debug(request):
 async def alertmanager_notify(request):
     chat = request.match_info.get("chat")
     message = await request.json()
-    logging.info(message)
-    status = message.get("status")
-    alert_list = ""
-    for alert in message.get("alerts"):
-        alert_list += "\n - {}".format(alert.get("labels").get("alertname"))
-    await request.app["telegram_bot"].bot.send_message(chat, "{}:{}".format(status, alert_list))
+    logger.info(pformat(message))
+    await telegram.send_alert(chat, message)
     return web.Response(text="Success: Alerted {}.".format(chat))
 
 
 async def start_background_tasks(app):
-    logging.info("Adding background tasks")
+    logger.info("Adding background tasks")
     app["metrics"] = asyncio.create_task(run_metrics_endpoint())
-    app["telegram"] = asyncio.create_task(app["telegram_bot"].run())
+    app["telegram"] = asyncio.create_task(telegram.run())
 
 
 async def cleanup_background_tasks(app):
-    logging.info("Removing background tasks")
+    logger.info("Removing background tasks")
     app["telegram"].cancel()
     await app["metrics"].result().close()
     await app["telegram"]
@@ -54,7 +52,7 @@ async def cleanup_background_tasks(app):
 
 def run(telegram_token: str):
     app = web.Application()
-    app["telegram_bot"] = Telegram(telegram_token)
+    telegram.setup(telegram_token)
     app.on_startup.append(start_background_tasks)
     app.on_shutdown.append(cleanup_background_tasks)
     app.add_routes(routes)

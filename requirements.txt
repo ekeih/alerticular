@@ -2,4 +2,5 @@ aiogram
 aiohttp[speedups]
 cchardet
 click
+Jinja2
 prometheus_async[aiohttp]
