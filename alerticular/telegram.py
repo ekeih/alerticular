@@ -2,6 +2,8 @@ import logging
 from typing import Dict, Any
 from jinja2 import Environment, PackageLoader
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.utils.emoji import emojize
+
 
 logger = logging.getLogger(__name__)
 JSONType = Dict[str, Any]
@@ -43,4 +45,4 @@ async def echo(message: types.Message):
 
 async def send_alert(chat: str, alert: JSONType):
     message = await alertmanager_template.render_async(alert)
-    await bot.send_message(chat, message, parse_mode="Markdown", disable_web_page_preview=True)
+    await bot.send_message(chat, emojize(message), parse_mode="Markdown", disable_web_page_preview=True)
