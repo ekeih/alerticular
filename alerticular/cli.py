@@ -10,5 +10,9 @@ CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"], "auto_envvar_prefix":
 
 @click.command(context_settings=CONTEXT_SETTINGS)
 @click.option("-b", "--bot-token", "bot_token", default=None, type=str, help="Telegram Bot Token")
-def cli(bot_token: str):
+def cli(bot_token: str = None):
     run(telegram_token=bot_token)
+
+
+if __name__ == "__main__":
+    cli()

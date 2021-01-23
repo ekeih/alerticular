@@ -13,6 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY setup.py .
 COPY alerticular alerticular
-RUN pip install .
 
-CMD [ "alerticular" ]
+CMD [ "python", "alerticular/cli.py" ]
