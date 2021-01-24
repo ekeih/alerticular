@@ -1,15 +1,15 @@
 import logging
-from typing import Dict, Any
-from jinja2 import Environment, PackageLoader
+from typing import Any, Dict
+
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.emoji import emojize
-
+from jinja2 import Environment, PackageLoader
 
 logger = logging.getLogger(__name__)
 JSONType = Dict[str, Any]
 
-bot = None
-dispatcher = None
+bot: Bot = None
+dispatcher: Dispatcher = None
 
 jinja2_environment = Environment(
     loader=PackageLoader("alerticular", "templates"), enable_async=True, trim_blocks=True, lstrip_blocks=True
@@ -17,7 +17,7 @@ jinja2_environment = Environment(
 alertmanager_template = jinja2_environment.get_template("alertmanager.md")
 
 
-def setup(token: str):
+def setup(token: str) -> None:
     global bot
     global dispatcher
     bot = Bot(token=token)
@@ -26,23 +26,23 @@ def setup(token: str):
     dispatcher.register_message_handler(echo)
 
 
-async def run():
+async def run() -> None:
     logger.info("Starting Telegram bot")
     await dispatcher.start_polling()
 
 
-async def send_welcome(message: types.Message):
+async def send_welcome(message: types.Message) -> None:
     logger.info("{}: {}".format(message.chat, message.text))
     await message.reply(
         "This bot is alerticular good!\nYour chat ID is: `{}`".format(message.chat.id), parse_mode="Markdown"
     )
 
 
-async def echo(message: types.Message):
+async def echo(message: types.Message) -> None:
     logger.info("{}: {}".format(message.chat, message.text))
     await message.answer("Echo: {}".format(message.text))
 
 
-async def send_alert(chat: str, alert: JSONType):
+async def send_alert(chat: str, alert: JSONType) -> None:
     message = await alertmanager_template.render_async(alert)
     await bot.send_message(chat, emojize(message), parse_mode="Markdown", disable_web_page_preview=True)
