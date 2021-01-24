@@ -5,3 +5,4 @@ click
 emoji
 Jinja2
 prometheus_async[aiohttp]
+telegram-click-aio
