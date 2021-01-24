@@ -53,7 +53,7 @@ async def send_alert(chat: str, alert: JSONType) -> None:
     try:
         int(chat)
     except:
-        if not chat.startswith('@'):
+        if not chat.startswith("@"):
             chat = f"@{chat}"
 
     await bot.send_message(chat, emojize(message), parse_mode="Markdown", disable_web_page_preview=True)
