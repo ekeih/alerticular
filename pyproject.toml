@@ -16,9 +16,18 @@ homepage = "https://github.com/ekeih/alerticular"
 
 keywords = ['alerting', 'alerticular']
 
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
+
 [tool.poetry.dependencies]
 python = "^3.6"  # Compatible python versions must be declared here
-
 
 aiogram = "^2.11"
 aiohttp = { version = "^3.7", extras = ["speedups"] }
