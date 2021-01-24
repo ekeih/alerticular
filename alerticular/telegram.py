@@ -27,6 +27,7 @@ def setup(token: str) -> None:
     dispatcher = Dispatcher(bot)
     dispatcher.register_message_handler(send_welcome, commands=["start", "help"])
     dispatcher.register_message_handler(handle_alerts, commands=["alerts", "a"])
+    dispatcher.register_message_handler(handle_silences, commands=["silences", "s"])
     dispatcher.register_message_handler(echo)
 
 
@@ -55,6 +56,17 @@ async def handle_alerts(message: types.Message) -> None:
     text = "\n".join(lines).strip()
     if len(text) <= 0:
         text = "No alerts right now"
+    await message.reply(emojize(text), parse_mode="Markdown", disable_web_page_preview=True)
+
+
+@command(name=["silences", "s"], description='Show a list of all silences.')
+async def handle_silences(message: types.Message) -> None:
+    logger.info("{}: {}".format(message.chat, message.text))
+    silences = await alertmanager.get_silences()
+    texts = list(map(str, silences))
+    text = "\n".join(texts).strip()
+    if len(text) <= 0:
+        text = "No silences right now"
     await message.reply(emojize(text), parse_mode="Markdown", disable_web_page_preview=True)
 
 
