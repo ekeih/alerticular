@@ -6,7 +6,8 @@ description = "Handle incoming Alertmanager alerts and send them to Telegram"
 license = "AGPLv3+"
 
 authors = [
-    "Max Rosin <git@hackrid.de>"
+    "Max Rosin <git@hackrid.de>",
+    "Markus Ressel <mail@markusressel.de>",
 ]
 
 readme = 'README.md'
