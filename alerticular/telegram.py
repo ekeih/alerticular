@@ -1,9 +1,12 @@
 import logging
 from typing import Any, Dict
 
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.utils.emoji import emojize
 from jinja2 import Environment, PackageLoader
+from telegram_click_aio.decorator import command
+
+from alerticular import alertmanager
 
 logger = logging.getLogger(__name__)
 JSONType = Dict[str, Any]
@@ -23,6 +26,8 @@ def setup(token: str) -> None:
     bot = Bot(token=token)
     dispatcher = Dispatcher(bot)
     dispatcher.register_message_handler(send_welcome, commands=["start", "help"])
+    dispatcher.register_message_handler(handle_alerts, commands=["alerts", "a"])
+    dispatcher.register_message_handler(handle_silences, commands=["silences", "s"])
     dispatcher.register_message_handler(echo)
 
 
@@ -36,6 +41,33 @@ async def send_welcome(message: types.Message) -> None:
     await message.reply(
         "This bot is alerticular good!\nYour chat ID is: `{}`".format(message.chat.id), parse_mode="Markdown"
     )
+
+
+@command(name=["alerts", "a"], description='Show a list of all alerts.')
+async def handle_alerts(message: types.Message) -> None:
+    logger.info("{}: {}".format(message.chat, message.text))
+    alerts = await alertmanager.get_alerts()
+    lines = []
+    for alert in alerts:
+        alert_name = alert.get("labels", {}).get("alertname", None)
+        alert_message = alert.get("annotations", {}).get("message", None)
+        if alert_name is not None:
+            lines.append(f":fire: {alert_name}: {alert_message}")
+    text = "\n".join(lines).strip()
+    if len(text) <= 0:
+        text = "No alerts right now"
+    await message.reply(emojize(text), parse_mode="Markdown", disable_web_page_preview=True)
+
+
+@command(name=["silences", "s"], description='Show a list of all silences.')
+async def handle_silences(message: types.Message) -> None:
+    logger.info("{}: {}".format(message.chat, message.text))
+    silences = await alertmanager.get_silences()
+    texts = list(map(str, silences))
+    text = "\n".join(texts).strip()
+    if len(text) <= 0:
+        text = "No silences right now"
+    await message.reply(emojize(text), parse_mode="Markdown", disable_web_page_preview=True)
 
 
 async def echo(message: types.Message) -> None:
