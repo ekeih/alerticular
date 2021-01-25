@@ -1,0 +1,15 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: psf/black@3d0689470752daedf7ef2bc9e602478ea31c0430
+        # The docs recommend @stable for black, but support to pass arguments
+        # is only available in the master branch yet.
+        with:
+          black_args: "--line-length 120 --check --diff"
