@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict
 
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.utils.emoji import emojize
 from jinja2 import Environment, PackageLoader
 
@@ -45,4 +45,15 @@ async def echo(message: types.Message) -> None:
 
 async def send_alert(chat: str, alert: JSONType) -> None:
     message = await alertmanager_template.render_async(alert)
+
+    # check if the chat variable is an integer or a string
+    # if it is an integer, its a chat ID and we are done
+    # if it is a string, it is probably a username or channel,
+    #   so we prefix it with an "@" symbol to let aiogram know
+    try:
+        int(chat)
+    except:
+        if not chat.startswith("@"):
+            chat = f"@{chat}"
+
     await bot.send_message(chat, emojize(message), parse_mode="Markdown", disable_web_page_preview=True)
