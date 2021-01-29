@@ -42,7 +42,7 @@ async def send_welcome(message: types.Message) -> None:
     )
 
 
-@command(name=["alerts", "a"], description='Show a list of all alerts.')
+@command(name=["alerts", "a"], description="Show a list of all alerts.")
 async def handle_alerts(message: types.Message) -> None:
     logger.info("{}: {}".format(message.chat, message.text))
     alerts = await alertmanager.get_alerts()
