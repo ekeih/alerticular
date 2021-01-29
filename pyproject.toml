@@ -40,9 +40,7 @@ click = "^7.1"
 emoji = "^1.1"
 Jinja2 = "^2.11"
 prometheus_async = { version = "^19.2", extras = ["aiohttp"] }
-
-# Optional dependencies (extras)
-pendulum = { version = "^1.4", optional = true }
+telegram-click-aio = "^1.0.0"
 
 #[tool.poetry.dev-dependencies]
 #pytest = "^3.0"
