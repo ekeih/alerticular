@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "alerticular"
+version = "0.0.1"
+description = "Handle incoming Alertmanager alerts and send them to Telegram"
+
+license = "AGPLv3+"
+
+authors = [
+    "Max Rosin <git@hackrid.de>",
+    "Markus Ressel <mail@markusressel.de>",
+]
+
+readme = 'README.md'
+
+repository = "https://github.com/ekeih/alerticular"
+homepage = "https://github.com/ekeih/alerticular"
+
+keywords = ['alerting', 'alerticular']
+
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
+
+[build-system]
+requires = ["poetry>=1.1.4"]
+
+[tool.poetry.dependencies]
+python = "^3.6"  # Compatible python versions must be declared here
+
+aiogram = "^2.11"
+aiohttp = { version = "^3.7", extras = ["speedups"] }
+cchardet = "^2.1"
+click = "^7.1"
+emoji = "^1.1"
+Jinja2 = "^2.11"
+prometheus_async = { version = "^19.2", extras = ["aiohttp"] }
+
+# Optional dependencies (extras)
+pendulum = { version = "^1.4", optional = true }
+
+#[tool.poetry.dev-dependencies]
+#pytest = "^3.0"
+#pytest-cov = "^2.4"
+
+[tool.poetry.scripts]
+alerticular = 'alerticular.cli:cli'
