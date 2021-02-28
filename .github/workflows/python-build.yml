@@ -27,7 +27,7 @@ jobs:
         run: poetry install
 
       - name: Check type hints
-        run: mypy alerticular tests
+        run: mypy --show-error-context --show-column-numbers  --show-error-codes --pretty alerticular tests
 
       - name: Test with pytest
         run: |
