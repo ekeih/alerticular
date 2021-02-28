@@ -26,15 +26,13 @@ jobs:
       - name: Install
         run: poetry install
 
-      - name: Enter venv with installation
-        run: poetry shell
-
       - id: files
         uses: jitterbit/get-changed-files@v1
 
       - name: Check type hints
-        run: mypy --show-error-context --show-column-numbers  --show-error-codes --pretty ${{ steps.files.outputs.all }}
+        run: |
+          poetry run mypy --show-error-context --show-column-numbers  --show-error-codes --pretty ${{ steps.files.outputs.all }}
 
       - name: Test with pytest
         run: |
-          pytest tests/ --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+          poetry run pytest tests/ --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
