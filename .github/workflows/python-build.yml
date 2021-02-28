@@ -1,4 +1,4 @@
-name: Native Build & Test
+name: "Native Build & Test"
 
 on:
   pull_request:
@@ -26,12 +26,9 @@ jobs:
       - name: Install
         run: poetry install
 
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-
       - name: Check type hints
         run: |
-          poetry run mypy --show-error-context --show-column-numbers  --show-error-codes --pretty ${{ steps.files.outputs.all }}
+          poetry run mypy --show-error-context --show-column-numbers  --show-error-codes --pretty alerticular tests
 
       - name: Test with pytest
         run: |
