@@ -29,8 +29,11 @@ jobs:
       - name: Enter venv with installation
         run: poetry shell
 
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+
       - name: Check type hints
-        run: mypy --show-error-context --show-column-numbers  --show-error-codes --pretty alerticular tests
+        run: mypy --show-error-context --show-column-numbers  --show-error-codes --pretty ${{ steps.files.outputs.all }}
 
       - name: Test with pytest
         run: |
