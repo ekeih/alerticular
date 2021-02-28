@@ -3,8 +3,9 @@ import logging
 from pprint import pformat
 
 from aiohttp import web
+from aiohttp.web_app import Application
 
-import alerticular.telegram as telegram
+import alerticular.target.telegram as telegram
 from alerticular.metrics import run_metrics_endpoint
 
 logger = logging.getLogger(__name__)
@@ -23,32 +24,68 @@ async def alertmanager_debug(request: web.Request) -> web.Response:
     return web.Response(text="Success: Alert logged.")
 
 
-@routes.post("/alertmanager/{chat}")
+# This is a placeholder, at a later point these names
+# should be provided by the actual available implementations
+supported_sources = [
+    "alertmanager"
+]
+
+# This is a placeholder, at a later point these names
+# should be provided by the actual available implementations
+supported_targets = [
+    "telegram"
+]
+
+
+@routes.post("/from/{source}/to/{chat}/on/{target}")
+@routes.post("/from/{source}/to/{target}/{chat}")
+@routes.post("/{source}/to/{target}/{chat}")
+@routes.post("/{source}/to/{chat}/on/{target}")
+@routes.post("/{source}/{target}/{chat}")
 async def alertmanager_notify(request: web.Request) -> web.Response:
+    source = str(request.match_info.get("source"))
+    if source not in supported_sources:
+        return web.HTTPBadRequest(
+            text=f"Unsupported source {source}. Supported sources: {', '.join(supported_sources)}"
+        )
+
+    target = str(request.match_info.get("target"))
+    if target not in supported_targets:
+        return web.HTTPBadRequest(
+            text=f"Unsupported target {target}. Supported targets: {', '.join(supported_targets)}"
+        )
+
     chat = str(request.match_info.get("chat"))
+
     message = await request.json()
     logger.info(pformat(message))
-    await telegram.send_alert(chat, message)
+    if target == "telegram":
+        await telegram.send_alert(chat, message)
     return web.Response(text="Success: Alerted {}.".format(chat))
 
 
-async def start_background_tasks(app: web.Application) -> None:
+async def on_startup_handler(app: web.Application) -> None:
     logger.info("Adding background tasks")
     app["metrics"] = asyncio.create_task(run_metrics_endpoint())
     app["telegram"] = asyncio.create_task(telegram.run())
 
 
-async def cleanup_background_tasks(app: web.Application) -> None:
+async def on_shutdown_handler(app: web.Application) -> None:
     logger.info("Removing background tasks")
     app["telegram"].cancel()
     await app["metrics"].result().close()
     await app["telegram"]
 
 
-def run(telegram_token: str) -> None:
+def create_app() -> Application:
     app = web.Application()
-    telegram.setup(telegram_token)
-    app.on_startup.append(start_background_tasks)
-    app.on_shutdown.append(cleanup_background_tasks)
+    app.on_startup.append(on_startup_handler)
+    app.on_shutdown.append(on_shutdown_handler)
     app.add_routes(routes)
+    return app
+
+
+def run(telegram_token: str) -> None:
+    telegram.setup(telegram_token)
+    app = create_app()
     web.run_app(app)
