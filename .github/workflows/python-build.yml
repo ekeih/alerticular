@@ -1,4 +1,4 @@
-name: Docker
+name: Native Build & Test
 
 on:
   pull_request:
