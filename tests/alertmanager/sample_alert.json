@@ -1,0 +1,55 @@
+{
+  "receiver": "debug",
+  "status": "firing",
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "MarkusWebsitesAreAllDown",
+        "cluster": "k3s"
+      },
+      "annotations": {},
+      "startsAt": "2021-02-28T20:10:00.26983707Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://fa8ceb962c51:9090/graph?g0.expr=vector%281%29&g0.tab=1",
+      "fingerprint": "b63fd5313cef9575"
+    },
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "Spam",
+        "cluster": "k3s"
+      },
+      "annotations": {},
+      "startsAt": "2021-02-28T20:10:00.26983707Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://fa8ceb962c51:9090/graph?g0.expr=vector%281%29&g0.tab=1",
+      "fingerprint": "fe90faa9158b956c"
+    },
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "SuperCriticalAlert",
+        "cluster": "k3s"
+      },
+      "annotations": {
+        "message": "The SSL certificate of  will expire in less than 28 days."
+      },
+      "startsAt": "2021-02-28T20:10:00.26983707Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://fa8ceb962c51:9090/graph?g0.expr=vector%281%29&g0.tab=1",
+      "fingerprint": "76d6d31745652503"
+    }
+  ],
+  "groupLabels": {
+    "cluster": "k3s"
+  },
+  "commonLabels": {
+    "cluster": "k3s"
+  },
+  "commonAnnotations": {},
+  "externalURL": "http://934ccac2f760:9093",
+  "version": "4",
+  "groupKey": "{}:{cluster='k3s'}",
+  "truncatedAlerts": 0
+}

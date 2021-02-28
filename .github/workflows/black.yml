@@ -8,8 +8,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - uses: psf/black@3d0689470752daedf7ef2bc9e602478ea31c0430
-        # The docs recommend @stable for black, but support to pass arguments
-        # is only available in the master branch yet.
-        with:
-          black_args: "--line-length 120 --check --diff"
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Run black --check .
+        run: black --line-length 120 --check --diff .
+
+      - name: If needed, commit black changes to the pull request
+        if: failure()
+        run: |
+          black --line-length 120 .
+          git config --global user.name 'autoblack'
+          git config --global user.email 'ekeih@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout $GITHUB_HEAD_REF
+          git commit -am "fixup: Format Python code with Black"
+          git push

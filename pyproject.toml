@@ -42,8 +42,10 @@ Jinja2 = "^2.11"
 prometheus_async = { version = "^19.2", extras = ["aiohttp"] }
 telegram-click-aio = "^1.0.0"
 
-#[tool.poetry.dev-dependencies]
-#pytest = "^3.0"
+[tool.poetry.dev-dependencies]
+pytest = "^5.0"
+pytest-aiohttp = "^0.3.0"
+pytest-mock = "^3.5.0"
 #pytest-cov = "^2.4"
 
 [tool.poetry.scripts]

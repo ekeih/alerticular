@@ -15,7 +15,10 @@ bot: Bot = None
 dispatcher: Dispatcher = None
 
 jinja2_environment = Environment(
-    loader=PackageLoader("alerticular", "templates"), enable_async=True, trim_blocks=True, lstrip_blocks=True
+    loader=PackageLoader("alerticular", "templates"),
+    enable_async=True,
+    trim_blocks=True,
+    lstrip_blocks=True,
 )
 alertmanager_template = jinja2_environment.get_template("alertmanager.md")
 
@@ -38,7 +41,8 @@ async def run() -> None:
 async def send_welcome(message: types.Message) -> None:
     logger.info("{}: {}".format(message.chat, message.text))
     await message.reply(
-        "This bot is alerticular good!\nYour chat ID is: `{}`".format(message.chat.id), parse_mode="Markdown"
+        "This bot is alerticular good!\nYour chat ID is: `{}`".format(message.chat.id),
+        parse_mode="Markdown",
     )
 
 
