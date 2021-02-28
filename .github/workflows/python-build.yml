@@ -26,6 +26,9 @@ jobs:
       - name: Install
         run: poetry install
 
+      - name: Enter venv with installation
+        run: poetry shell
+
       - name: Check type hints
         run: mypy --show-error-context --show-column-numbers  --show-error-codes --pretty alerticular tests
 
