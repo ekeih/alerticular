@@ -26,15 +26,11 @@ async def alertmanager_debug(request: web.Request) -> web.Response:
 
 # This is a placeholder, at a later point these names
 # should be provided by the actual available implementations
-supported_sources = [
-    "alertmanager"
-]
+supported_sources = ["alertmanager"]
 
 # This is a placeholder, at a later point these names
 # should be provided by the actual available implementations
-supported_targets = [
-    "telegram"
-]
+supported_targets = ["telegram"]
 
 
 @routes.post("/from/{source}/to/{chat}/on/{target}")

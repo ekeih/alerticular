@@ -15,7 +15,10 @@ bot: Bot = None
 dispatcher: Dispatcher = None
 
 jinja2_environment = Environment(
-    loader=PackageLoader("alerticular", "templates"), enable_async=True, trim_blocks=True, lstrip_blocks=True
+    loader=PackageLoader("alerticular", "templates"),
+    enable_async=True,
+    trim_blocks=True,
+    lstrip_blocks=True,
 )
 alertmanager_template = jinja2_environment.get_template("alertmanager.md")
 
@@ -38,7 +41,8 @@ async def run() -> None:
 async def send_welcome(message: types.Message) -> None:
     logger.info("{}: {}".format(message.chat, message.text))
     await message.reply(
-        "This bot is alerticular good!\nYour chat ID is: `{}`".format(message.chat.id), parse_mode="Markdown"
+        "This bot is alerticular good!\nYour chat ID is: `{}`".format(message.chat.id),
+        parse_mode="Markdown",
     )
 
 
@@ -55,7 +59,9 @@ async def handle_alerts(message: types.Message) -> None:
     text = "\n".join(lines).strip()
     if len(text) <= 0:
         text = "No alerts right now"
-    await message.reply(emojize(text), parse_mode="Markdown", disable_web_page_preview=True)
+    await message.reply(
+        emojize(text), parse_mode="Markdown", disable_web_page_preview=True
+    )
 
 
 async def echo(message: types.Message) -> None:
@@ -76,4 +82,6 @@ async def send_alert(chat: str, alert: JSONType) -> None:
         if not chat.startswith("@"):
             chat = f"@{chat}"
 
-    await bot.send_message(chat, emojize(message), parse_mode="Markdown", disable_web_page_preview=True)
+    await bot.send_message(
+        chat, emojize(message), parse_mode="Markdown", disable_web_page_preview=True
+    )
