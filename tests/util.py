@@ -9,7 +9,7 @@ def get_test_json(name: str) -> dict or None:
     """
     import json
 
-    with open(f'tests/{name}.json', 'r') as f:
+    with open(f"tests/{name}.json", "r") as f:
         return json.loads(f.read())
 
 

@@ -34,7 +34,7 @@ async def test_webhook(mocker, cli):
         f"/from/{source}/to/{target}/{chat}",
         f"/{source}/to/{chat}/on/{target}",
         f"/{source}/to/{target}/{chat}",
-        f"/from/{source}/to/{chat}/on/{target}"
+        f"/from/{source}/to/{chat}/on/{target}",
     ]:
         resp = await cli.post(url, json=alert_data)
         assert resp.status == 200
