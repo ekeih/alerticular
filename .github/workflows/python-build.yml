@@ -34,10 +34,11 @@ jobs:
           pattern: '^.*\.py$'
 
       - name: Check type hints
-        if: |
-          contains(steps.files.outputs.files_created, ".py") or contains(steps.files.outputs.files_updated, ".py")
         run: |
-          poetry run mypy --show-error-context --show-column-numbers --show-error-codes --pretty ${{ steps.files.outputs.files_created }} ${{ steps.files.outputs.files_updated }}
+          if [ -n "${{ steps.files.outputs.files_created }}" ] || [ -n "${{ steps.files.outputs.files_updated }}" ]
+          then
+            poetry run mypy --show-error-context --show-column-numbers --show-error-codes --pretty ${{ steps.files.outputs.files_created }} ${{ steps.files.outputs.files_updated }}
+          fi
 
       - name: Test with pytest
         run: |
