@@ -35,7 +35,7 @@ jobs:
 
       - name: Check type hints
         if: |
-          ${{ steps.files.outputs.files_created != 0 or steps.files.outputs.files_updated != 0}}
+          ${{ steps.files.outputs.files_created }}" != '' || "${{ steps.files.outputs.files_updated }}" != ''
         run: |
           poetry run mypy --show-error-context --show-column-numbers --show-error-codes --pretty ${{ steps.files.outputs.files_created }} ${{ steps.files.outputs.files_updated }}
 
