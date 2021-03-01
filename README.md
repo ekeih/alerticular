@@ -2,11 +2,11 @@
 
 [![Docker Repository on Quay](https://quay.io/repository/ekeih/alerticular/status "Docker Repository on Quay")](https://quay.io/repository/ekeih/alerticular)
 
-Alerticular is the bridge between your infrastructure and your notification target. What does that mean? Well, Alerticular receives a message and sends it somewhere else. For now it supports [Prometheus Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) as input and [Telegram](https://telegram.org/) as output.
+Alerticular is the bridge between your infrastructure and your notification target. What does that mean? Well, Alerticular receives an event and sends it as a templated message somewhere else. For now it supports [Prometheus Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) as input and [Telegram](https://telegram.org/) as output.
 
 So whenever Prometheus triggers an alert you can use Alerticular to receive a Telegram message. (In the future Alerticular might support more platforms, e.g. receiving messages from [kubewatch](https://github.com/bitnami-labs/kubewatch).)
 
-Alerticular is developed with a focus on Kubernetes. There shouldn't be an issue runnig it in another way, but some examples may assume that it is used in a Kubernetes cluster with Alertmanager running in the same cluster.
+Alerticular is developed with the assumption it is running in Kubernetes. There shouldn't be an issue runnig it in another way, but some examples may assume that it is used in a Kubernetes cluster with Alertmanager running in the same cluster.
 
 ## Installation
 
@@ -19,9 +19,9 @@ Pip is best used inside of a [virtualenv](https://docs.python.org/3/tutorial/ven
 ```
 git clone git@github.com:ekeih/alerticular.git
 cd alerticular
-pip install poetry
+pip install --user poetry
 poetry install
-alerticular --bot-token $TOKEN
+poetry shell alerticular --bot-token $TOKEN
 ```
 
 ### Docker
@@ -36,13 +36,13 @@ docker run --rm --env ALERTICULAR_BOT_TOKEN="$TOKEN" quay.io/ekeih/alerticular
 # Create a new namespace
 kubectl create namespace alerticular
 
-# Create secret with the Telegram token
-kubectl -n alerticular create secret generic alerticular --from-literal="token=$TOKEN"
+# Create secret with the Telegram token, see "Configure Telegram" section below to get the Telegram token
+kubectl --namespace alerticular create secret generic alerticular --from-literal="token=$TOKEN"
 
 # Install Alerticular using the Helm chart
 git clone git@github.com:ekeih/alerticular.git
 cd alerticular
-helm upgrade --install alerticular ./charts/alerticular`
+helm upgrade --install --namespace alerticular alerticular ./charts/alerticular`
 ```
 
 Please check the [values.yaml](./charts/alerticular/values.yaml) for all available chart options.
@@ -66,7 +66,7 @@ Please check the [values.yaml](./charts/alerticular/values.yaml) for all availab
 
 ## Configure Alertmanager
 
-Please refer to the [upstream documentation](https://prometheus.io/docs/alerting/latest/configuration) for a full reference of the available Alertmanager options. Alertmanager is able to call a webhook to send alerts and Alerticular is able to receive, parse and forward those. Alerticular supports [a few different URL formats to receive messages](./alerticular/webhook.py#L41). The most verbose format is `http://host:8080/from/{source}/to/{chat}/on/{target}`, so to send an Alertmanager alert to a Telegram user with the chat ID 12345678 the URL would be `https://alerticular.alerticular:8080/from/alertmanager/to/12345678/on/telegram` (assuming Alerticular is running in Kubernetes cluster in a namespace called `alerticular`). In Alertmanager the configuration could look like this:
+Please refer to the [upstream documentation](https://prometheus.io/docs/alerting/latest/configuration) for a full reference of the available Alertmanager options. Alertmanager is able to call a webhook to send alerts and Alerticular is able to receive and parse those. Alerticular supports [a few different URL formats to receive messages](./alerticular/webhook.py#L41). The most verbose format is `http://host:8080/from/{source}/to/{chat}/on/{target}`, so to send an Alertmanager alert to a Telegram user with the chat ID 12345678 the URL would be `https://alerticular.alerticular:8080/from/alertmanager/to/12345678/on/telegram` (assuming Alerticular is running in Kubernetes cluster in a namespace called `alerticular`). In Alertmanager the configuration could look like this:
 
 ```
 route:
@@ -94,3 +94,27 @@ Alerticular ships with a default [Jinja2 template](./alerticular/templates/alert
 ## Metrics
 
 By default Alerticular exposes Prometheus metrics at port 8081, e.g. http://localhost:8081/metrics.
+
+## Contributing
+
+GitHub is for social coding: if you want to write code, we encourage contributions through pull requests from forks of this repository. Create GitHub tickets for bugs and new features and comment on the ones that you are interested in.
+
+## License
+
+```
+Alerticular - The bridge between your infrastructure and notification targets.
+Copyright (C) 2020  Max Rosin
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
