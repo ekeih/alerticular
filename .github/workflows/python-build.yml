@@ -34,8 +34,6 @@ jobs:
           pattern: '^.*\.py$'
 
       - name: Check type hints
-        if: |
-          contains(steps.files.outputs.files_created, '.py') or contains(steps.files.outputs.files_updated, '.py')
         run: |
           if [ -n "${{ steps.files.outputs.files_created }}" ] || [ -n "${{ steps.files.outputs.files_updated }}" ]
           then
