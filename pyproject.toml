@@ -31,7 +31,7 @@ classifiers = [
 requires = ["poetry>=1.1.4"]
 
 [tool.poetry.dependencies]
-python = "^3.6"  # Compatible python versions must be declared here
+python = "^3.7"  # Compatible python versions must be declared here
 
 aiogram = "^2.11"
 aiohttp = { version = "^3.7", extras = ["speedups"] }
@@ -44,9 +44,10 @@ telegram-click-aio = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.0"
+pytest-cov = "^2.11"
 pytest-aiohttp = "^0.3.0"
 pytest-mock = "^3.5.0"
-#pytest-cov = "^2.4"
+mypy = "^0.812"
 
 [tool.poetry.scripts]
 alerticular = 'alerticular.cli:cli'
