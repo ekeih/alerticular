@@ -5,7 +5,7 @@
   {% for alert in alerts_resolved %}
 :white_check_mark: {{ alert.labels.alertname }}
     {% if alert.annotations.message is defined %}
-      _{{ alert.annotations.message }}_
+      <i>{{ alert.annotations.message }}</i>
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -14,7 +14,7 @@
   {% for alert in alerts_firing %}
 :fire: {{ alert.labels.alertname }}
     {% if alert.annotations.message is defined %}
-      _{{ alert.annotations.message }}_
+      <i>{{ alert.annotations.message }}</i>
     {% endif %}
   {% endfor %}
 {% endif %}
