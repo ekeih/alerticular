@@ -82,7 +82,7 @@ receivers:
       - url: "http://alerticular.alerticular:8080/from/alertmanager/to/12345678/on/telegram"
   - name: "telegramuser2"
     webhook_configs:
-      - url: "http://alerticular.alerticular:8080/from/alertmanager/to/87654321/on/telegram"
+      - url: "http://alerticular.alerticular:8080/from/alertmanager/to/someusername/on/telegram"
 ```
 
 If the Telegram user has a username configured it is also possible to use the username instead of the chat ID in the URL.
