@@ -91,6 +91,8 @@ If the Telegram user has a username configured it is also possible to use the us
 
 Alerticular ships with a default [Jinja2 template](./alerticular/templates/alertmanager.md) for the Telegram messages. To override the template it is currently necessary to override the file (e.g. by mounting a ConfigMap in Kubernetes) but soon an easier way to pass a custom template will be provided.
 
+To style the message you can use emoji shortcodes and the [HTML style formatting](https://core.telegram.org/bots/api#html-style) options provided by telegram.
+
 ## Metrics
 
 By default Alerticular exposes Prometheus metrics at port 8081, e.g. http://localhost:8081/metrics.
