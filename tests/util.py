@@ -1,7 +1,8 @@
+from typing import Optional
 from unittest.mock import Mock
 
 
-def get_test_json(name: str) -> dict or None:
+def get_test_json(name: str) -> Optional[dict]:
     """
     Reads a JSON file from the tests directory
     :param name:
