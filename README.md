@@ -82,7 +82,7 @@ receivers:
       - url: "http://alerticular.alerticular:8080/from/alertmanager/to/12345678/on/telegram"
   - name: "telegramuser2"
     webhook_configs:
-      - url: "http://alerticular.alerticular:8080/from/alertmanager/to/87654321/on/telegram"
+      - url: "http://alerticular.alerticular:8080/from/alertmanager/to/someusername/on/telegram"
 ```
 
 If the Telegram user has a username configured it is also possible to use the username instead of the chat ID in the URL.
@@ -90,6 +90,8 @@ If the Telegram user has a username configured it is also possible to use the us
 ## Templating
 
 Alerticular ships with a default [Jinja2 template](./alerticular/templates/alertmanager.md) for the Telegram messages. To override the template it is currently necessary to override the file (e.g. by mounting a ConfigMap in Kubernetes) but soon an easier way to pass a custom template will be provided.
+
+To style the message you can use emoji shortcodes and the [HTML style formatting](https://core.telegram.org/bots/api#html-style) options provided by telegram.
 
 ## Metrics
 
