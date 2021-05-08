@@ -20,7 +20,7 @@ jinja2_environment = Environment(
     trim_blocks=True,
     lstrip_blocks=True,
 )
-alertmanager_template = jinja2_environment.get_template("alertmanager.md")
+alertmanager_template = jinja2_environment.get_template("alertmanager.html")
 
 
 def setup(token: str) -> None:
