@@ -38,7 +38,7 @@ aiohttp = { version = "^3.7", extras = ["speedups"] }
 cchardet = "^2.1"
 click = "^7.1"
 emoji = "^1.1"
-Jinja2 = "^2.11"
+Jinja2 = "^3.1"
 prometheus_async = { version = "^19.2", extras = ["aiohttp"] }
 telegram-click-aio = "^1.0.0"
 
