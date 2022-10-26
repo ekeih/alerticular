@@ -44,7 +44,7 @@ telegram-click-aio = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.2"
-pytest-cov = "^2.11"
+pytest-cov = "^4.0"
 pytest-aiohttp = "^1.0.0"
 pytest-mock = "^3.5.0"
 mypy = "^0.982"
