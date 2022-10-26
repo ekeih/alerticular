@@ -43,7 +43,7 @@ prometheus_async = { version = "^22.2", extras = ["aiohttp"] }
 telegram-click-aio = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.0"
+pytest = "^7.2"
 pytest-cov = "^2.11"
 pytest-aiohttp = "^0.3.0"
 pytest-mock = "^3.5.0"
