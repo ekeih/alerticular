@@ -33,8 +33,8 @@ requires = ["poetry>=1.2.2"]
 [tool.poetry.dependencies]
 python = "^3.7"  # Compatible python versions must be declared here
 
-aiogram = "^2.11"
-aiohttp = { version = "^3.7", extras = ["speedups"] }
+aiogram = "^2.22"
+aiohttp = { version = "^3.8", extras = ["speedups"] }
 cchardet = "^2.1"
 click = "^8.1"
 emoji = "^2.1"
