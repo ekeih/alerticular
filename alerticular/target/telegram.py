@@ -58,7 +58,7 @@ async def handle_alerts(message: types.Message) -> None:
     text = "\n".join(lines).strip()
     if len(text) <= 0:
         text = "No alerts right now"
-    await message.reply(emojize(text, language='alias'), parse_mode="HTML", disable_web_page_preview=True)
+    await message.reply(emojize(text, language="alias"), parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def echo(message: types.Message) -> None:
@@ -79,4 +79,4 @@ async def send_alert(chat: str, alert: JSONType) -> None:
         if not chat.startswith("@"):
             chat = f"@{chat}"
 
-    await bot.send_message(chat, emojize(message, language='alias'), parse_mode="HTML", disable_web_page_preview=True)
+    await bot.send_message(chat, emojize(message, language="alias"), parse_mode="HTML", disable_web_page_preview=True)
