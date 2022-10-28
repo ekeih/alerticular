@@ -165,6 +165,14 @@ python-versions = "*"
 pycparser = "*"
 
 [[package]]
+name = "chardet"
+version = "5.0.0"
+description = "Universal encoding detector for Python 3"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "charset-normalizer"
 version = "2.1.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
@@ -537,30 +545,21 @@ description = "Click inspired command interface toolkit for aiogram"
 category = "main"
 optional = false
 python-versions = "*"
-develop = false
 
 [package.dependencies]
 aiogram = "*"
 aiohttp = "*"
-aiosignal = "*"
 async-timeout = "*"
 attrs = "*"
 babel = "*"
 certifi = "*"
-charset-normalizer = "*"
+chardet = "*"
 emoji = "*"
-frozenlist = "*"
 idna = "*"
 multidict = "*"
 pytz = "*"
 typing-extensions = "*"
 yarl = "*"
-
-[package.source]
-type = "git"
-url = "https://github.com/markusressel/telegram-click-aio.git"
-reference = "master"
-resolved_reference = "073215b14cb1c7c1478a71266740cfa3560a3653"
 
 [[package]]
 name = "tomli"
@@ -622,7 +621,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"  # Compatible python versions must be declared here
-content-hash = "8960286aa2f9dcf2c625a9990ed43d3f31195117c89a0cfda4f3338bc716611c"
+content-hash = "f9ed8d3e9a0464cfc07d154756da9a939810233d29f2ef5235b830a4900cab6c"
 
 [metadata.files]
 aiodns = [
@@ -929,6 +928,10 @@ cffi = [
     {file = "cffi-1.15.1-cp39-cp39-win32.whl", hash = "sha256:40f4774f5a9d4f5e344f31a32b5096977b5d48560c5592e2f3d2c4374bd543ee"},
     {file = "cffi-1.15.1-cp39-cp39-win_amd64.whl", hash = "sha256:70df4e3b545a17496c9b3f41f5115e69a4f2e77e94e1d2a8e1070bc0c38c8a3c"},
     {file = "cffi-1.15.1.tar.gz", hash = "sha256:d400bfb9a37b1351253cb402671cea7e89bdecc294e8016a707f6d1d8ac934f9"},
+]
+chardet = [
+    {file = "chardet-5.0.0-py3-none-any.whl", hash = "sha256:d3e64f022d254183001eccc5db4040520c0f23b1a3f33d6413e099eb7f126557"},
+    {file = "chardet-5.0.0.tar.gz", hash = "sha256:0368df2bfd78b5fc20572bb4e9bb7fb53e2c094f60ae9993339e8671d0afb8aa"},
 ]
 charset-normalizer = [
     {file = "charset-normalizer-2.1.1.tar.gz", hash = "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845"},
@@ -1318,7 +1321,10 @@ pytz = [
     {file = "pytz-2022.5-py2.py3-none-any.whl", hash = "sha256:335ab46900b1465e714b4fda4963d87363264eb662aab5e65da039c25f1f5b22"},
     {file = "pytz-2022.5.tar.gz", hash = "sha256:c4d88f472f54d615e9cd582a5004d1e5f624854a6a27a6211591c251f22a6914"},
 ]
-telegram-click-aio = []
+telegram-click-aio = [
+    {file = "telegram_click_aio-1.0.0-py3-none-any.whl", hash = "sha256:5ca9ce9144d2dc5df25d909a97a7ca680e9ce3be01712a8a806d5ac22a900b0e"},
+    {file = "telegram_click_aio-1.0.0.tar.gz", hash = "sha256:56cd35791334ab318928218af9a17885552f7de927e633697f7ff0abb690f5bf"},
+]
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
