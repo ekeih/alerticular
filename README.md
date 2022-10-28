@@ -1,7 +1,5 @@
 # Alerticular
 
-[![Docker Repository on Quay](https://quay.io/repository/ekeih/alerticular/status "Docker Repository on Quay")](https://quay.io/repository/ekeih/alerticular)
-
 Alerticular is the bridge between your infrastructure and your notification target. What does that mean? Well, Alerticular receives an event and sends it as a templated message somewhere else. For now it supports [Prometheus Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) as input and [Telegram](https://telegram.org/) as output.
 
 So whenever Prometheus triggers an alert you can use Alerticular to receive a Telegram message. (In the future Alerticular might support more platforms, e.g. receiving messages from [kubewatch](https://github.com/bitnami-labs/kubewatch).)
@@ -29,23 +27,6 @@ poetry shell alerticular --bot-token $TOKEN
 ```
 docker run --rm --env ALERTICULAR_BOT_TOKEN="$TOKEN" quay.io/ekeih/alerticular
 ```
-
-### Kubernetes / Helm
-
-```
-# Create a new namespace
-kubectl create namespace alerticular
-
-# Create secret with the Telegram token, see "Configure Telegram" section below to get the Telegram token
-kubectl --namespace alerticular create secret generic alerticular --from-literal="token=$TOKEN"
-
-# Install Alerticular using the Helm chart
-git clone git@github.com:ekeih/alerticular.git
-cd alerticular
-helm upgrade --install --namespace alerticular alerticular ./charts/alerticular`
-```
-
-Please check the [values.yaml](./charts/alerticular/values.yaml) for all available chart options.
 
 ## Configure Telegram
 
