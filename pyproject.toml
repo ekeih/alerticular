@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "alerticular"
-version = "0.0.1"
+version = "0.1.2"
 description = "Handle incoming Alertmanager alerts and send them to Telegram"
 
 license = "AGPLv3+"
@@ -43,6 +43,7 @@ prometheus_async = { version = "^22.2", extras = ["aiohttp"] }
 telegram-click-aio = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
+black = "^22.10.0"
 pytest = "^7.2"
 pytest-cov = "^4.0"
 pytest-aiohttp = "^1.0.0"
