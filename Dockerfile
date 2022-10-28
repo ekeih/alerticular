@@ -1,4 +1,4 @@
-FROM python:3.9.5-alpine
+FROM python:3.11.0-alpine
 
 EXPOSE 8080/tcp
 EXPOSE 8081/tcp
