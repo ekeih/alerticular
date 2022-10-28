@@ -25,7 +25,7 @@ poetry shell alerticular --bot-token $TOKEN
 ### Docker
 
 ```
-docker run --rm --env ALERTICULAR_BOT_TOKEN="$TOKEN" quay.io/ekeih/alerticular
+docker run --rm --env ALERTICULAR_BOT_TOKEN="$TOKEN" ghcr.io/ekeih/alerticular:latest
 ```
 
 ## Configure Telegram
