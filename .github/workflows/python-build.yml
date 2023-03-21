@@ -28,7 +28,7 @@ jobs:
 
       - id: files
         name: Changed Files Exporter
-        uses: futuratrepadeira/changed-files@v4.0.0
+        uses: futuratrepadeira/changed-files@v4.0.1
         with:
           repo-token: ${{ github.token }}
           pattern: '^.*\.py$'
