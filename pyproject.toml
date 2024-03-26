@@ -39,7 +39,7 @@ click = "^8.1"
 emoji = "^2.1"
 Jinja2 = "^3.1"
 prometheus_async = { version = "^22.2", extras = ["aiohttp"] }
-telegram-click-aio = "^1.0.0"
+telegram-click-aio = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "^23.0.0"
